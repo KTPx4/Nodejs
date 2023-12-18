@@ -1,7 +1,7 @@
 const CustomerModel = require('../../models/Customer')
 
 module.exports.Validator = async(req, res, next)=>{
-    let {phone, fullName, Address, ListCart, MoneyGiven, MoneyExchange} = req.body 
+    let {phone, fullName, Address, ListCart, MoneyGiven, MoneyExchange, secondTime} = req.body 
     if(!phone)
     {
         return res.json({
@@ -15,6 +15,7 @@ module.exports.Validator = async(req, res, next)=>{
     {
         if(!fullName && !Address)
         {
+            
             return res.json({
                 code: 205,
                 message: "Vui lòng cung cấp thêm thông tin tạo mới"
@@ -36,6 +37,7 @@ module.exports.Validator = async(req, res, next)=>{
         }
        else  // create if not exists
        {
+           
             let cust = await CustomerModel.create({
                 Phone: phone,
                 Address: Address,
@@ -43,7 +45,17 @@ module.exports.Validator = async(req, res, next)=>{
             })          
        }
     }
-  
+    if(!secondTime)
+    {
+        return res.json({
+            code: 204,
+            message: "Thông tin khách hàng",
+            data:{
+                customer: cust
+            }
+        })
+    }
+    
     if(!MoneyGiven || isNaN(MoneyGiven) || parseFloat(MoneyGiven) < 0)
     {
         return res.json({

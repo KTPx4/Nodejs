@@ -35,7 +35,46 @@ module.exports.GetAll = async (req, res) => {
     }
   };
   
+module.exports.GetByPhoneCust = async(req, res) =>{
+  let {phone} = req.query 
+  if(!phone)
+  {
+    return res.json({
+      code: 400,
+      message: "Thiếu số điện thoại khách hàng"
+    })
+  }
 
+  try 
+  {
+    let orders = await OrderModel.find({CustomerPhone: phone});
+   
+    let returns = await Promise.all(orders.map(async (o) => 
+    {
+      let productList = await getDetail(o._id);
+      let Customer = await CustModel.findOne({Phone: o.CustomerPhone})
+
+      return { ...o.toObject(),Customer, productList };
+    }));
+
+   
+    return res.json({
+      code: 200,
+      message: "Lấy thành công danh sách order",
+      data: {
+        orders: returns,
+      },
+    });
+
+  } catch (error) {
+    console.error("Error at OrderController - GetAll ", error);
+    return res.json({
+      code: 500,
+      message: "Lỗi Tại Server!",
+    });
+  }
+
+}
 module.exports.GetByID = async(req, res) =>{
     try
     {

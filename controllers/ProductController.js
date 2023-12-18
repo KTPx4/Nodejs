@@ -3,8 +3,7 @@ const ProductModel = require("../models/Product")
 
 module.exports.GetAll = async(req, res) =>{
     try{
-        let {search} = req.query
-   
+        let {search} = req.query   
         
         let Products = []
         if(search)
