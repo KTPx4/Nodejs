@@ -88,19 +88,10 @@ module.exports.ExistsProduct = async(req, res, next) =>{
     }  
     else
     {
-        let OrD = await OrderDetailModel.find({BarCodeID: barcode})
-        if(OrD.length > 0)
-        {
-            return  res.json({
-                code: 400,
-                message: "Sản phẩm đã có đơn hàng, không thể xóa"
-            })
-        }
-        else
-        {
+        
 
-            return next()
-        }
+        return next()
+      
     }
 }
 
