@@ -143,7 +143,7 @@ module.exports.Delete = async (req, res) =>{
                 code: 200,
                 message: "Xóa thành công sản phẩm " + barcode,
                 data:{
-                    product: []
+                    product: prod
                 }
             })
         })
