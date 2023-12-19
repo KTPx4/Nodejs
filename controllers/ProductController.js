@@ -131,7 +131,7 @@ module.exports.Delete = async (req, res) =>{
             code: 400,
             message: "Sản phẩm đã có đơn đặt hàng. Không thể xóa! ",
             data:{
-                product: prod
+                product: []
             }
         })
     }
@@ -143,7 +143,7 @@ module.exports.Delete = async (req, res) =>{
                 code: 200,
                 message: "Xóa thành công sản phẩm " + barcode,
                 data:{
-                    product: prod
+                    product: []
                 }
             })
         })
